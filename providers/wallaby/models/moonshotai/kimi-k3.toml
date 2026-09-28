@@ -1,13 +1,17 @@
-# Effort: reasoning_effort = low|medium|high|max (verified on this host
-# 2026-09-14; same-prompt median reasoning tokens over 6 runs per level:
-# low 61 < medium 85 < high 105 < max 123 — four graded tiers, "max" accepted
-# and highest, "medium" a distinct intermediate tier). No wire path disables
-# reasoning: "none"/"minimal" are accepted but still reason, and
-# reasoning.enabled=false / thinking.type="disabled" are ignored — hence no
-# "none" in values and no toggle.
-# Pricing: https://wallabytoken.com/pricing.json (accessed 2026-09-14), USD per 1M tokens.
+# Effort: reasoning_effort = low|medium|high|max is accepted but currently has
+# no observable effect on this host (verified 2026-09-28: all levels, including
+# "none", produce identical max-capped reasoning over 12 consecutive days of
+# hourly probes, reasoning_tokens ~130-240 regardless of level). Callers
+# therefore have no effective control — per repo convention: no caller control → [].
+# (History: four graded tiers verified on this host 2026-09-14, median
+# reasoning tokens low 61 < medium 85 < high 105 < max 123 over 6 runs/level;
+# the grading stopped being observable on 2026-09-15. Tiers can be re-added
+# if graded behavior returns.)
+# Reasoning cannot be disabled: reasoning.enabled=false / thinking.type=
+# "disabled" are ignored — reasoning stays always-on.
+# Pricing: https://wallabytoken.com/pricing.json (accessed 2026-09-28), USD per 1M tokens.
 base_model = "moonshotai/kimi-k3"
-reasoning_options = [{ type = "effort", values = ["low", "medium", "high", "max"] }]
+reasoning_options = [{ type = "effort", values = [] }]
 
 [interleaved]
 field = "reasoning_content"
