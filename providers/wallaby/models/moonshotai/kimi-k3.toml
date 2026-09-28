@@ -11,7 +11,7 @@
 # "disabled" are ignored — reasoning stays always-on.
 # Pricing: https://wallabytoken.com/pricing.json (accessed 2026-09-28), USD per 1M tokens.
 base_model = "moonshotai/kimi-k3"
-reasoning_options = [{ type = "effort", values = [] }]
+reasoning_options = []
 
 [interleaved]
 field = "reasoning_content"
