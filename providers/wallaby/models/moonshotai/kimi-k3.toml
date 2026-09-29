@@ -1,17 +1,17 @@
-# Effort: reasoning_effort = low|medium|high|max is accepted but currently has
-# no observable effect on this host (verified 2026-09-28: all levels, including
-# "none", produce identical max-capped reasoning over 12 consecutive days of
-# hourly probes, reasoning_tokens ~130-240 regardless of level). Callers
-# therefore have no effective control — per repo convention: no caller control → [].
-# (History: four graded tiers verified on this host 2026-09-14, median
-# reasoning tokens low 61 < medium 85 < high 105 < max 123 over 6 runs/level;
-# the grading stopped being observable on 2026-09-15. Tiers can be re-added
-# if graded behavior returns.)
-# Reasoning cannot be disabled: reasoning.enabled=false / thinking.type=
-# "disabled" are ignored — reasoning stays always-on.
-# Pricing: https://wallabytoken.com/pricing.json (accessed 2026-09-28), USD per 1M tokens.
+# Effort: reasoning_effort = none|low|medium|high|xhigh|max (verified on this
+# host 2026-09-29, 3 runs per level, median reasoning tokens — easy probe:
+# none 0, low 146; harder probe: low ~600 while high/xhigh/max saturate the
+# 2048-token test cap. "medium"/"xhigh" behave close to "high"/"max").
+# Caveat: "none" is best-effort, not a hard disable — it suppresses reasoning
+# on simple tasks (0 tokens on every run) but on a harder prompt the model
+# still produced 4.2k-8.6k reasoning tokens.
+# History: four graded tiers first verified on this host 2026-09-14; between
+# 2026-09-15 and 2026-09-29 a bug in our serving stack dropped caller-supplied
+# effort before it took effect (all levels behaved identically); fixed and
+# re-verified end-to-end 2026-09-29.
+# Pricing: https://wallabytoken.com/pricing.json (accessed 2026-09-29), USD per 1M tokens.
 base_model = "moonshotai/kimi-k3"
-reasoning_options = []
+reasoning_options = [{ type = "effort", values = ["none", "low", "medium", "high", "xhigh", "max"] }]
 
 [interleaved]
 field = "reasoning_content"
